@@ -105,3 +105,12 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# uv
+uv.lock
+
+# ruff
+.ruff_cache/
+
+# pytest
+.pytest_cache/

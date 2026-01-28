@@ -12,33 +12,49 @@ The patterns are drafted following instructions from three main stylists: <a hre
 ## Installation and Requirements <a class="anchor" id="installation-and-requirements"></a>
 
 ### Requirements
-OpenPattern requires the following libraries to work properly.
+OpenPattern requires Python 3.10+ and the following libraries:
 * matplotlib
 * numpy
 * scipy
-* json
-* sqlite3
 
-The last two are embedded in the standard library so you do not need to install them.
-If you want to access the measurements database from the terminal or some GUI you'll have to install the sqlite3 engine
+### Quick Start (Recommended)
 
-### Installation
-
-To install the library you must first
-* clone the directory somewhere on your computer
-* open a terminal in the root directory
-* run ```python3 setup.py install```.
-sudo rights may be needed depending on your computer configuration.
-
-OpenPattern comes with an sqlite3 ```measurements.db``` database. This base contains a set of standard French and Italian sizes.
-In order to be able to add your own measurements to this database you need to change its permissions.
-
-On linux machines the database is stored in  your .cache directory
+Using [uv](https://github.com/astral-sh/uv) (fast, modern Python package manager):
 
 ```bash
+# Install uv if you haven't
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-cd ~/.cache/Python-Eggs/OpenPattern-0.2.0-py3.11.egg-tmp/OpenPattern/data
-chmod 666 measurements.db
+# Clone and install
+git clone https://github.com/fmetivier/OpenPattern.git
+cd OpenPattern
+uv sync
+```
+
+### Alternative: pip
+
+```bash
+git clone https://github.com/fmetivier/OpenPattern.git
+cd OpenPattern
+pip install -e .
+```
+
+### Development Setup
+
+```bash
+uv sync --extra dev    # Install with dev dependencies
+uv run pytest          # Run tests
+uv run ruff check .    # Lint code
+```
+
+### Database Permissions
+
+OpenPattern comes with an sqlite3 `measurements.db` database containing standard French and Italian sizes.
+To add your own measurements, you may need to change its permissions:
+
+```bash
+# Location varies by installation method
+chmod 666 path/to/OpenPattern/data/measurements.db
 ```
 
 

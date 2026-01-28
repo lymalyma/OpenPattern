@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # librairies
 import sys
-import pkg_resources
+from importlib import resources
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -57,8 +57,9 @@ class Pattern:
         self.figPATH = "./"
         self.frmt = "pdf"
 
-        stream = pkg_resources.resource_filename(__name__, "data/measurements.db")
-        self.dbPATH = stream
+        # Get database path using importlib.resources (Python 3.9+)
+        with resources.as_file(resources.files("OpenPattern.data").joinpath("measurements.db")) as db_path:
+            self.dbPATH = str(db_path)
         # print(self.dbPATH)
 
         for k in kwargs.keys():

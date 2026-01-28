@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "OpenPattern"
+version = "0.3.0"
+description = "Pattern drafting libraries for bespoke sewing patterns"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+requires-python = ">=3.10"
+authors = [
+    { name = "François Métivier", email = "metivier.laofu@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Multimedia :: Graphics",
+]
+keywords = ["sewing", "pattern", "drafting", "bespoke", "clothing"]
+dependencies = [
+    "matplotlib>=3.7",
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+]
+docs = [
+    "sphinx>=7.0",
+    "sphinx-rtd-theme>=2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/fmetivier/OpenPattern"
+Documentation = "https://openpattern.readthedocs.io/"
+Repository = "https://github.com/fmetivier/OpenPattern.git"
+Issues = "https://github.com/fmetivier/OpenPattern/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["OpenPattern"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "OpenPattern/**",
+    "README.md",
+    "LICENSE",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]  # Line too long - existing code has long lines
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

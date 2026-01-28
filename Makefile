@@ -1,5 +1,18 @@
 init:
-	pip install -r requirements.txt
+	uv sync
+
+dev:
+	uv sync --extra dev
 
 test:
-	nosetests tests
+	uv run pytest tests/
+
+lint:
+	uv run ruff check .
+
+format:
+	uv run ruff format .
+
+# Legacy pip-based install (deprecated)
+install-legacy:
+	pip install -e .
