@@ -110,7 +110,10 @@ class Basic_Bodice(Pattern):
 
         else:
             print("style %s unknown, using Donnanno instead" % (self.style))
-            self.Donnanno_bodice_without_dart()
+            if self.gender == "m":
+                self.Donnanno_bodice_without_dart_m()
+            else:
+                self.Donnanno_bodice_without_dart_w()
 
         self.save_measurements_sql()
 

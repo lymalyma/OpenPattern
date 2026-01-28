@@ -1693,6 +1693,8 @@ class Pattern:
                     ax.text(np.mean(x) - 0.5, np.mean(y), ll[2], rotation=90)
                 elif ll[3] == "r":
                     ax.text(np.mean(x) + 0.5, np.mean(y), ll[2], rotation=90)
+        
+        return ax
 
     def add_scales(self, ax, val=5):
         """adds a blue scale at the bottom left
