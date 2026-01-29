@@ -1417,7 +1417,7 @@ class Pattern:
                     ypos = 0.5 * (y1 + y2)
 
                     ax.text(xpos, ypos, pagename, fontsize=16, ha="center")
-                    pdf.savefig()
+                    pdf.savefig(fig)
 
             ax.set_xlim(xmin, xmax)
             ax.set_ylim(ymin, ymax)
@@ -1428,7 +1428,7 @@ class Pattern:
                 ypos = min(ymin + (j + 1) * y, ymax)
                 ax.plot((xmin, xmax), (ypos, ypos), "k-")
 
-            pdf.savefig()
+            pdf.savefig(fig)
 
         fig.set_size_inches((xmax - xmin) / 2.54, (ymax - ymin) / 2.54)
 
