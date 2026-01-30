@@ -493,6 +493,26 @@ class Basic_Bodice(Pattern):
             Z2,
         ]
 
+        # side seam separation
+        sep = 1
+        Q_back = Q + [sep, 0]
+        E_back = E + [sep, 0]
+        C_back = C + [sep, 0]
+        D_back = D + [sep, 0]
+        G_back = G + [sep, 0]
+        H_back = H + [sep, 0]
+        H1_back = H1 + [sep, 0]
+        L_back = L + [sep, 0]
+        L1_back = L1 + [sep, 0]
+        N_back = N + [sep, 0]
+        O_back = O + [sep, 0]
+        P_back = P + [sep, 0]
+        P1_back = P1 + [sep, 0]
+
+        # Shift back curves
+        emmanchure_dos_shifted = [[p[0] + sep, p[1]] for p in emmanchure_dos]
+        col_dos_shifted = [[p[0] + sep, p[1]] for p in col_dos]
+
         for i in range(len(Bodice_Points_Names)):
             self.Front_dic[Bodice_Points_Names[i]] = Bodice_Points_List[i]
 
@@ -504,17 +524,17 @@ class Basic_Bodice(Pattern):
             + [Q.pos(), E.pos()]
         )
         self.Back_vertices = (
-            [C.pos(), D.pos()]
-            + col_dos
-            + [O.pos()]
-            + emmanchure_dos
-            + [Q.pos(), E.pos()]
+            [C_back.pos(), D_back.pos()]
+            + col_dos_shifted
+            + [O_back.pos()]
+            + emmanchure_dos_shifted
+            + [Q_back.pos(), E_back.pos()]
         )
 
         # comments
-        self.set_fold_line(L + Point([0, -2]), C + Point([0, 2]), "right")
-        self.add_labelled_line(M, L, "BUST LINE", "t")
-        self.add_labelled_line(B, C, "WAIST LINE", "t")
+        self.set_fold_line(L_back + Point([0, -2]), C_back + Point([0, 2]), "right")
+        self.add_labelled_line(M, L_back, "BUST LINE", "t")
+        self.add_labelled_line(B, C_back, "WAIST LINE", "t")
         self.add_comment(self.middle(I, I1) + Point([0, 5]), "FRONT")
         self.add_comment(self.middle(H1, H) + Point([0, 5]), "BACK")
         self.set_grainline(self.middle(H, H1) + Point([0, -10]))
