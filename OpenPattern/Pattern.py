@@ -1209,10 +1209,11 @@ class Pattern:
 
         # checks if ax argument exists
 
-        xmin = 0
-        ymin = 0
-        xmax = 0
-        ymax = 0
+        # Determine initial bounding box from first point if possible
+        xmin = float('inf')
+        ymin = float('inf')
+        xmax = float('-inf')
+        ymax = float('-inf')
 
         for polyline in polyline_list:
             for val in polyline:
@@ -1257,7 +1258,10 @@ class Pattern:
                     if int(val[1]) > ymax:
                         ymax = int(val[1])
 
-        offset = 5
+        if xmin == float('inf'):
+            xmin, ymin, xmax, ymax = 0, 0, 0, 0
+
+        offset = 2
 
         H = ymax - ymin + 2 * offset
         W = xmax - xmin + 2 * offset
@@ -1265,7 +1269,7 @@ class Pattern:
         if not fig or not ax:
             fig = plt.figure(figsize=(W / 2.54, H / 2.54))
             ax = plt.axes([0, 0, 1, 1])
-            ax.axis("square")
+            ax.set_aspect("equal")
             preexist = False
         else:
             preexist = True
@@ -1402,12 +1406,8 @@ class Pattern:
         with PdfPages(fname) as pdf:
             for i in range(nx):
                 for j in range(ny):
-                    if (xmax - xmin - i * x) < x and (ymax - ymin - j * y) < y:
-                        ax.set_xlim(xmin + i * x, xmin + (i + 1) * x)
-                        ax.set_ylim(ymin + j * y, ymin + (j + 1) * y)
-                    else:
-                        ax.set_xlim(xmin + i * x, min(xmin + (i + 1) * x, xmax))
-                        ax.set_ylim(ymin + j * y, min(ymin + (j + 1) * y, ymax))
+                    ax.set_xlim(xmin + i * x, xmin + (i + 1) * x)
+                    ax.set_ylim(ymin + j * y, ymin + (j + 1) * y)
                     pagename = "p%i-%i" % (i, j)
 
                     x1, x2 = ax.get_xlim()
@@ -1416,11 +1416,13 @@ class Pattern:
                     y1, y2 = ax.get_ylim()
                     ypos = 0.5 * (y1 + y2)
 
-                    ax.text(xpos, ypos, pagename, fontsize=16, ha="center")
+                    txt = ax.text(xpos, ypos, pagename, fontsize=16, ha="center")
                     pdf.savefig(fig)
+                    txt.remove()
 
             ax.set_xlim(xmin, xmax)
             ax.set_ylim(ymin, ymax)
+            ax.set_aspect("equal")
             for i in range(nx):
                 xpos = min(xmin + (i + 1) * x, xmax)
                 ax.plot((xpos, xpos), (ymin, ymax), "k-")
